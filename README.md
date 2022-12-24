@@ -20,9 +20,22 @@ What does it have?
 - Supports Arc-9
 - An Accolade System that tracks kills and "Combo" the player is in
 
+
+---------------------------------------------------------------------------------
+FAQ
+----------------------------------------------------------------------------------
 How to install this hud?
 
-- Put this in your gmod install folder/GarrysMod/garrysmod/addons/(Insert New Folder)/ 
+- Put this in your gmod install folder it is typically in C:/ProgramFiles/Steam/steamapps/common/GarrysMod/garrysmod/addons/(Insert New Folder)/ 
+
+What are the Commands of the Hud?
+
+- ca_hud_enable 0/1 Enables the HUD
+- ca_hud_accolades_enable 0/1 Enables the Accolades in the middle of the screen when killing npcs or players
+- ca_hud_radar_enable 0/1 Enables the radar on the top right of the screen
+- ca_hud_radar_show_enemies 0/1 Enables the radar to track enemies
+- ca_hud_kdr_enable 0/1 Enables your KDR on the top middle screen 
+- ca_hud_ultrawide_scale 0/1 Scales your hud to 16:9 instead of 21:9 (ONLY FOR ULTRAWIDE AND UP OTHER WISE IT WILL DO NOTHING)
 
 What is the future of the project?
 

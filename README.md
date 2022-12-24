@@ -1,6 +1,6 @@
 # CA-Gmod-Hud
 
-This is the Devlopment version of the CA HUD For GMOD 13
+This is the Public version of the CA HUD For GMOD 13. GO AND BREAK THIS HUD
 
 This contains:
 

@@ -2,6 +2,8 @@
 
 This is the Public version of the CA HUD For GMOD 13. GO AND BREAK THIS HUD
 
+
+
 This contains:
 
 - Some of 2008 Era CA HUD Assets that are used in the Release Version
@@ -17,6 +19,10 @@ What does it have?
 - Radar that Tracks Players,NPCs,Health items, and Ammo
 - Supports Arc-9
 - An Accolade System that tracks kills and "Combo" the player is in
+
+How to install this hud?
+
+- Put this in your gmod install folder/GarrysMod/garrysmod/addons/(Insert New Folder)/ 
 
 What is the future of the project?
 

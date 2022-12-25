@@ -18,6 +18,110 @@ function ScaleX(px)
 	end
 end
 
+function ScaleH(px)
+	return (px / 768) * ScrH()
+end
+
+function surface.DrawTexturedRectRotatedPoint( x, y, w, h, rot, x0, y0 )
+	
+	local c = math.cos( math.rad( rot ) )
+	local s = math.sin( math.rad( rot ) )
+	
+	local newx = y0 * s - x0 * c
+	local newy = y0 * c + x0 * s
+	
+	surface.DrawTexturedRectRotated( x + newx, y + newy, w, h, rot )
+	
+end
+
+function callgunbase(wep)
+	
+	if wep.ARC9 == true then
+		local firemode_arc9 = wep:GetCurrentFiremodeTable()
+		
+		if firemode_arc9.Mode == -1 then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_AUTO.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif firemode_arc9.Mode >= 2 then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_THREE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif firemode_arc9.Mode == 1 then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		end
+	elseif wep.ArcCW == true then
+		local firemode_arrcw = wep:GetCurrentFiremode().Mode
+		
+		if firemode_arrcw == 2 then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_AUTO.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif firemode_arrcw < 0 then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_THREE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif firemode_arrcw == 1 then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		end
+		
+	-- this one was a pain in the ass to do since TFA devlopment build github is no where to be found. This would do for now as this is my understanding how the HUD finds the firemode.
+	elseif wep.IsTFAWeapon == true then
+		if wep:GetFireModeName() == "Full-Auto" then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_AUTO.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif wep:GetMaxBurst() > 1 then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_THREE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif table.HasValue( {"Pump-Action", "Bolt-Action", "Semi-Auto" }, wep:GetFireModeName()) then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		end
+	-- this one wasn't too bad but it was still a pain in the ass to find the values until I realise that you can just call the primary.Automatic command and burst commands	
+	elseif wep.Base == "mg_base" then
+		if wep.Primary.Automatic == true then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_AUTO.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif wep.Primary.BurstRounds >= 2 then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_THREE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif wep.Primary.Automatic == false then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		end
+	elseif wep.CW20Weapon then
+		if wep.Primary.Automatic == true and wep.BurstAmount >= 2 then
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_THREE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif wep.Primary.Automatic == true then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_AUTO.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif wep.dt.Safe == false then
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		end
+	elseif table.HasValue( {"bobs_gun_base", "bobs_scoped_base", "bobs_shotty_base" }, wep.Base) then 
+		if wep.Primary.Automatic == true then
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_AUTO.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif wep.Primary.Burst == true then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_THREE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif wep.Primary.Automatic == false then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		end
+	else 
+		if table.HasValue( {"weapon_ar2", "weapon_smg1" }, LocalPlayer():GetActiveWeapon():GetClass()) then
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_AUTO.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif table.HasValue( {"weapon_357", "weapon_crossbow", "weapon_pistol", "weapon_shotgun"}, LocalPlayer():GetActiveWeapon():GetClass()) then
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		end
+	end
+
+	
+end
+
 hook.Add("Initialize", "CAFonts", function()
 	surface.CreateFont("CA_Font", {
         font = "Living Hell",
@@ -33,11 +137,6 @@ hook.Add("Initialize", "CAFonts", function()
 	multikills = 1
 	combokills = 1
 end)
-
-local function killacclade(check)
-	
-	
-end
 
 net.Receive( "attackercheck", function()
 	attacker = net.ReadEntity()
@@ -173,40 +272,6 @@ net.Receive( "Do_KillAccolades", function()
 
 end )
 
-function ScaleH(px)
-	return (px / 768) * ScrH()
-end
-
-function surface.DrawTexturedRectRotatedPoint( x, y, w, h, rot, x0, y0 )
-	
-	local c = math.cos( math.rad( rot ) )
-	local s = math.sin( math.rad( rot ) )
-	
-	local newx = y0 * s - x0 * c
-	local newy = y0 * c + x0 * s
-	
-	surface.DrawTexturedRectRotated( x + newx, y + newy, w, h, rot )
-	
-end
-
-function callgunbase(wep)
-	
-	if wep.Base == "arc9_base" then
-	local firemode_arc9 = wep:GetCurrentFiremodeTable()
-		
-		if firemode_arc9.Mode == -1 then 
-			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_AUTO.png", "noclamp"))
-			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
-		elseif firemode_arc9.Mode >= 2 then 
-			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_THREE.png", "noclamp"))
-			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
-		elseif firemode_arc9.Mode == 1 then 
-			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
-			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
-		end
-	end
-end
-
 hook.Add("HUDPaint", "CA_HUD", function()
 	if GetConVar("ca_hud_enable"):GetBool() then
 		--all player related stats
@@ -222,8 +287,8 @@ hook.Add("HUDPaint", "CA_HUD", function()
 			local mag = ply:GetActiveWeapon(wep:Clip1())
 			local res = ply:GetActiveWeapon(wep:GetPrimaryAmmoType())
 		end
-	
-	
+
+		
 		if IsValid(ply) and ply:Alive() then
 			if hp <= 30 then
 				surface.SetDrawColor(255, 0, 0, 255)
@@ -242,10 +307,8 @@ hook.Add("HUDPaint", "CA_HUD", function()
 			local secondhp = "gearsyfox/CA HUD/HUD_BULLET_BIG_" .. tostring(HPsecd) .. ".png"
 			local HPthrd = math.floor(hp / 100)
 			local thirdhp = "gearsyfox/CA HUD/HUD_BULLET_BIG_" .. tostring(HPthrd) .. ".png"
-			local HPford = hp / 1000
 		
-		
-			if HPford >= 1 then	
+			if hp >= 1000 then	
 				surface.SetMaterial(Material("gearsyfox/CA HUD/HUD_BULLET_BIG_9.png", "noclamp"))
 				surface.DrawTexturedRect(ScaleX(60), ScaleH(713), ScaleW(32), ScaleH(32))
 				surface.DrawTexturedRect(ScaleX(76), ScaleH(713), ScaleW(32), ScaleH(32))
@@ -330,9 +393,8 @@ hook.Add("HUDPaint", "CA_HUD", function()
 				local seconddeaths = "gearsyfox/CA HUD/HUD_SCORE_" .. tostring(Deathsecd) .. ".png"
 				local Deathsthrd = math.floor(ply:Deaths() / 100)
 				local thirddeaths = "gearsyfox/CA HUD/HUD_SCORE_" .. tostring(Deathsthrd) .. ".png"
-				local Deathsford = ply:Deaths() / 1000
 		
-				if Deathsford >= 1 then	
+				if ply:Deaths() >= 1000 then	
 					surface.SetMaterial(Material("gearsyfox/CA HUD/HUD_SCORE_9.png", "noclamp"))
 					surface.DrawTexturedRect(ScaleX(530), ScaleH(18), ScaleW(64), ScaleH(64))
 					surface.DrawTexturedRect(ScaleX(550), ScaleH(18), ScaleW(64), ScaleH(64))
@@ -475,7 +537,7 @@ hook.Add("HUDPaint", "CA_HUD", function()
 			surface.DrawTexturedRect(ScaleX(925), ScaleH(713), ScaleW(32), ScaleH(32))
 		end
 		
-		-- weapon base firemode (unfinished)
+		-- weapon base firemode 
 		callgunbase(wep)
 		
 		

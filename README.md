@@ -26,7 +26,7 @@ FAQ
 ----------------------------------------------------------------------------------
 How to install this hud?
 
-- Put this in your gmod install folder it is typically in C:/ProgramFiles/Steam/steamapps/common/GarrysMod/garrysmod/addons/(Insert New Folder)/ 
+- Put this in your gmod install folder it is typically in C:/ProgramFiles/Steam/steamapps/common/GarrysMod/garrysmod/addons/
 
 What are the Commands of the Hud?
 

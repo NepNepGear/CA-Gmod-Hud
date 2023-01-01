@@ -4,7 +4,7 @@ util.AddNetworkString( "Do_KillAccolades" )
 
 hook.Add( "OnNPCKilled", "PostNotifyClientnpc", function( npc, attacker, inflictor )
 		
-		if GetConVar("ca_hud_accolades_enable"):GetBool() and attacker:IsPlayer() and IsValid(attacker) and IsValid(npc) and attacker == inflictor then
+		if GetConVar("ca_hud_accolades_enable"):GetBool() and attacker:IsPlayer() and IsValid(attacker) and IsValid(npc) then
 			playerid = attacker:SteamID64()
 			net.Start( "attackercheck" )
 			net.WriteEntity( attacker )

@@ -43,8 +43,8 @@ end )
 
 
 net.Receive( "Hitboxgive", function()
-	player = net.ReadString()
-	if playerid == player then
+	local playeridentify = net.ReadString()
+	if playerid == playeridentify then
 		
 		if hitboxarea == HITGROUP_HEAD then
 			net.Start( "Do_KillAccolades" )

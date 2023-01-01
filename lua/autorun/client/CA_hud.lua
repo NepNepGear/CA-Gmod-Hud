@@ -62,7 +62,19 @@ function callgunbase(wep)
 			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
 			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
 		end
-		
+	elseif wep.Draconic then
+		local firemode = wep:GetNWString("FireMode")
+
+		if firemode == "Auto" then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_AUTO.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif firemode == "Burst" then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_THREE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		elseif firemode == "Semi" then 
+			surface.SetMaterial(Material("gearsyfox/CA HUD/FIRE_MODE_ONE.png", "noclamp"))
+			surface.DrawTexturedRect(ScaleX(920), ScaleH(750), ScaleW(256), ScaleH(16))
+		end
 	-- this one was a pain in the ass to do since TFA devlopment build github is no where to be found. This would do for now as this is my understanding how the HUD finds the firemode.
 	elseif wep.IsTFAWeapon == true then
 		if wep:GetFireModeName() == "Full-Auto" then 
